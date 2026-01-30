@@ -1,0 +1,75 @@
+<!-- <h2 mat-dialog-title>משימה חדשה</h2>
+
+<mat-dialog-content>
+  <p>מלאי את פרטי המשימה:</p>
+  
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>כותרת המשימה</mat-label>
+    <input matInput [(ngModel)]="title" cdkFocusInitial>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>תיאור (אופציונלי)</mat-label>
+    <textarea matInput [(ngModel)]="description" rows="3"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">ביטול</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="!title">
+    צור משימה
+  </button>
+  
+</mat-dialog-actions> -->
+<h2 mat-dialog-title>
+  <mat-icon *ngIf="data?.showCommentsOnly">forum</mat-icon>
+  {{ data?.showCommentsOnly ? 'תגובות: ' + data?.title : (data?.id ? 'עריכת משימה' : 'משימה חדשה') }}
+</h2>
+
+<mat-dialog-content>
+  <div *ngIf="!data?.showCommentsOnly" style="display: flex; flex-direction: column; gap: 10px; padding-top: 10px;">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>כותרת המשימה</mat-label>
+      <input matInput [(ngModel)]="data.title" placeholder="הזיני כותרת...">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>תיאור</mat-label>
+      <textarea matInput [(ngModel)]="data.description" rows="3"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="data?.id" class="comments-container">
+    <mat-divider style="margin: 20px 0;"></mat-divider>
+    <h3 style="font-size: 1rem; color: #666;">צ'אט ({{comments.length}})</h3>
+    
+    <div class="comments-list">
+      <div *ngFor="let comment of comments" 
+           class="comment-bubble" 
+           [class.me]="isMyComment(comment)">
+        <div class="comment-header">
+          <span class="comment-author" *ngIf="!isMyComment(comment)">{{ comment.userName || 'חבר צוות' }}</span>
+          <span class="comment-time">{{ comment.createdAt | date:'HH:mm' }}</span>
+        </div>
+        <div class="comment-text">{{ comment.body  }}</div>
+      </div>
+      <p *ngIf="comments.length === 0" style="text-align: center; color: #999; font-size: 0.9rem;">אין תגובות עדיין.</p>
+    </div>
+
+    <div class="add-comment-area">
+      <mat-form-field appearance="outline" style="flex: 1; margin-bottom: -1.25em;">
+        <input matInput [(ngModel)]="newCommentText" placeholder="הוספת תגובה..." (keyup.enter)="postComment()">
+      </mat-form-field>
+      <button mat-mini-fab color="primary" (click)="postComment()" [disabled]="!newCommentText.trim()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">ביטול</button>
+  <button *ngIf="!data?.showCommentsOnly" mat-raised-button color="primary" (click)="onSave()" [disabled]="!data?.title">
+    {{ data?.id ? 'עדכן' : 'צור' }}
+  </button>
+</mat-dialog-actions>

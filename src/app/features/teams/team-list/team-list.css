@@ -1,0 +1,76 @@
+.container {
+  padding: 40px 5%;
+  background: transparent;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-weight: 800;
+  color: #1e293b;
+}
+
+/* הכפתור הסגול כמו בתמונה */
+.add-btn {
+  background: #a21caf !important;
+  color: white !important;
+  border-radius: 50px !important;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+/* הכרטיס המעוצב בדיוק כמו בלוח */
+.custom-card {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 30px !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  position: relative;
+  overflow: hidden; /* חשוב בשביל הפס למעלה */
+  padding-top: 10px;
+}
+
+/* הפס הצבעוני למעלה - עושה את ההבדל! */
+.card-header-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+}
+
+.avatar-box {
+  background: #f1f5f9;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6366f1;
+}
+
+.owner-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  margin-left: 5px;
+}
+
+.mat-mdc-card-title {
+  font-weight: 700 !important;
+  font-size: 1.3rem !important;
+}
+
+/* כפתור "צפה בפרויקטים" מעוגל */
+button[mat-stroked-button] {
+  border-radius: 15px !important;
+  border-color: #e2e8f0 !important;
+}

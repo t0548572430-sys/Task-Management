@@ -1,0 +1,23 @@
+<div class="app-container">
+  <mat-toolbar color="primary">
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    
+    <span>Task Manager</span>
+    
+    <span class="spacer"></span>
+
+    @if (currentUser()) {
+      <span class="user-greeting">שלום, {{ currentUser()?.name }}</span>
+    }
+
+    <button mat-icon-button (click)="logout()" title="התנתק">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

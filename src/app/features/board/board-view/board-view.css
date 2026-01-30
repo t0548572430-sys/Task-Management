@@ -1,0 +1,203 @@
+/* מיכל ראשי - מסדר את העמודות בשורה */
+.board-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 100px); /* גובה מסך פחות תפריטים */
+  background-color: #f0f2f5;
+  overflow-x: auto;
+}
+
+/* עיצוב כל עמודה */
+.column {
+  flex: 1; /* כל עמודה לוקחת רוחב שווה */
+  min-width: 300px;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.column-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.column-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+/* אזור הגלילה של המשימות */
+.tasks-list {
+  padding: 16px;
+  flex: 1; /* תופס את שאר הגובה */
+  overflow-y: auto; /* גלילה פנימית */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* כרטיס המשימה */
+.task-card {
+  transition: transform 0.2s;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* עיצובים ספציפיים לסטטוסים */
+.doing-border {
+  border-right: 4px solid #3f51b5; /* פס צבע בצד */
+}
+
+.done-bg {
+  background-color: #fafafa; /* רקע אפור בהיר */
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: #888;
+}
+/* פריסת גריד מודרנית */
+.cards-grid, .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+/* עיצוב ה-Board (לוח המשימות) */
+.board-container {
+  display: flex;
+  gap: 25px;
+  padding: 30px;
+  overflow-x: auto;
+  align-items: flex-start;
+}
+
+.board-column {
+  background: rgba(248, 250, 252, 0.5);
+  border-radius: 28px;
+  padding: 20px;
+  min-width: 350px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.column-title {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  color: #64748b;
+  padding: 0 10px;
+}
+
+/* אנימציה להופעת כרטיסים */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.team-card, .project-card, .task-card {
+  animation: fadeIn 0.6s ease forwards;
+}
+/* לוח המשימות המודרני */
+.board-container {
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    height: calc(100vh - 120px);
+    overflow-x: auto;
+    background: transparent;
+    align-items: flex-start;
+}
+
+/* עיצוב הטורים - מראה "צף" */
+.board-column {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 32px;
+    min-width: 360px;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.column-title {
+    padding: 25px 30px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e293b;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* עיצוב המשימות בתוך הטור */
+.task-list {
+    padding: 0 15px 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.task-card {
+    margin-bottom: 20px !important;
+    border: none !important;
+    background: white !important;
+    border-radius: 20px !important;
+    padding: 10px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.task-card:hover {
+    transform: scale(1.03) translateY(-5px) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* אינדיקטורים צבעוניים לפי סטטוס */
+.board-column:nth-child(1) { border-top: 8px solid #6366f1; } /* לביצוע - כחול */
+.board-column:nth-child(2) { border-top: 8px solid #f59e0b; } /* בתהליך - כתום */
+.board-column:nth-child(3) { border-top: 8px solid #10b981; } /* הושלם - ירוק */
+
+.task-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.task-desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* כפתורים בתוך המשימה */
+.mat-mdc-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    padding: 8px !important;
+}
+
+.mat-mdc-icon-button {
+    --mdc-icon-button-icon-size: 20px;
+    width: 36px !important;
+    height: 36px !important;
+    background: #f8fafc !important;
+    margin: 0 2px !important;
+}

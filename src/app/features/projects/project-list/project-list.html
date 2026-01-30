@@ -1,0 +1,81 @@
+<div class="projects-container">
+  
+  <mat-toolbar class="custom-toolbar">
+    <button mat-icon-button (click)="goBackToTeams()" class="back-btn">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+
+    <div class="title-group">
+      <span class="team-label">צוות</span>
+      <h2 class="team-name">{{ currentTeam()?.name }}</h2>
+    </div>
+
+    <span class="spacer"></span>
+
+    <div class="team-stats">
+      <mat-icon>group</mat-icon>
+      <span>{{ currentTeam()?.members_count || 0 }} חברים</span>
+    </div>
+
+    <div class="toolbar-actions">
+      <button mat-flat-button class="btn-secondary" (click)="showMemberForm = !showMemberForm">
+        <mat-icon>person_add</mat-icon>
+        הוסף חבר
+      </button>
+
+      <button mat-raised-button class="btn-primary" (click)="showCreateForm = !showCreateForm">
+        <mat-icon>add</mat-icon>
+        פרויקט חדש
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <mat-progress-bar *ngIf="isLoading()" mode="indeterminate"></mat-progress-bar>
+
+  <div class="form-section" *ngIf="showMemberForm || showCreateForm">
+    <mat-card class="form-card">
+      <div class="form-content" *ngIf="showMemberForm">
+        <mat-form-field appearance="outline">
+          <mat-label>מזהה משתמש או אימייל</mat-label>
+          <input matInput [(ngModel)]="newMemberEmail">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="submitAddMember()">הוסף</button>
+      </div>
+
+      <div class="form-content" *ngIf="showCreateForm">
+        <mat-form-field appearance="outline">
+          <mat-label>שם הפרויקט</mat-label>
+          <input matInput [(ngModel)]="newProjectName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>תיאור</mat-label>
+          <input matInput [(ngModel)]="newProjectDesc">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="createProject()" [disabled]="!newProjectName">צור</button>
+      </div>
+      <button mat-button (click)="showMemberForm = false; showCreateForm = false">ביטול</button>
+    </mat-card>
+  </div>
+
+  <div class="grid-container">
+    <mat-card *ngFor="let project of projects()" class="project-card-ui" (click)="openBoard(project.id)">
+      <div class="card-accent-line"></div>
+      <mat-card-header>
+        <mat-card-title>{{ project.name }}</mat-card-title>
+        <mat-card-subtitle>{{ project.description }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-actions align="end">
+        <button mat-icon-button class="delete-btn" (click)="$event.stopPropagation(); deleteProject(project)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+        <button mat-button class="enter-btn">כנס ללוח</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div *ngIf="projects().length === 0 && !isLoading()" class="empty-state-ui">
+      <mat-icon>folder_off</mat-icon>
+      <p>אין פרויקטים בצוות זה עדיין.</p>
+    </div>
+  </div>
+</div>

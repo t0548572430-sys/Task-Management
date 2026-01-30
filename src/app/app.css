@@ -1,0 +1,44 @@
+/* הגדרות גלובליות - להדביק ב-styles.css */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --primary-color: #6366f1;
+    --radius-lg: 30px;
+    --radius-md: 20px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    background-color: var(--bg-color) !important;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+    margin: 0;
+}
+
+/* הפיכת כל הכרטיסים באתר לזהים ללוח המשימות */
+.mat-mdc-card {
+    background: var(--card-bg) !important;
+    border-radius: var(--radius-lg) !important;
+    border: none !important;
+    box-shadow: var(--shadow) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.mat-mdc-card:hover {
+    transform: translateY(-5px);
+}
+
+/* כפתורים עגולים ומודרניים */
+.mat-mdc-raised-button, .mat-mdc-flat-button {
+    border-radius: 50px !important;
+    padding: 10px 25px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+}
+
+/* שדות קלט מעוגלים (Input) */
+.mat-mdc-form-field {
+    width: 100%;
+}
+.mdc-text-field--outline {
+    border-radius: var(--radius-md) !important;
+}

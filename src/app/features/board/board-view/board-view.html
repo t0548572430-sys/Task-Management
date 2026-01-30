@@ -1,0 +1,108 @@
+<!-- <mat-toolbar color="primary" class="board-header">
+  <button mat-icon-button (click)="goBackToProjectList()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>{{ currentProject?.name || 'לוח משימות' }}</span>
+  <span class="spacer"></span>
+  <button mat-raised-button color="accent" (click)="openAddTask()">
+    <mat-icon>add</mat-icon> משימה חדשה
+  </button>
+</mat-toolbar> -->
+<mat-toolbar class="board-header">
+  <div class="header-content" style="display: flex; width: 100%; align-items: center; padding: 0 20px;">
+    <button mat-icon-button (click)="goBackToProjectList()" class="back-btn">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <div class="title-group">
+      <span class="project-label">פרויקט</span>
+      <h2 class="project-name">{{ currentProject?.name || 'Loading...' }}</h2>
+    </div>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" class="add-task-btn" (click)="openAddTask()">
+      <mat-icon>add</mat-icon> 
+      <span>הוסף משימה</span>
+    </button>
+  </div>
+</mat-toolbar>
+
+<div class="board-container">
+  <div class="board-column">
+    <h3 class="column-title">לביצוע ({{todoTasks().length}})</h3>
+    <div class="task-list">
+      <mat-card *ngFor="let task of todoTasks()" class="task-card">
+        <mat-card-content>
+          <div class="task-main">
+            <h4 class="task-title">{{task.title}}</h4>
+            <p class="task-desc" *ngIf="task.description">{{task.description}}</p>
+          </div>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-icon-button color="primary" (click)="openComments(task)" title="תגובות">
+            <mat-icon>forum</mat-icon>
+          </button>
+          <button mat-icon-button (click)="moveTask(task, 'doing')" title="העבר בביצוע">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          <button mat-icon-button (click)="editTask(task)" title="ערוך">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTask(task)" title="מחק">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="board-column">
+    <h3 class="column-title">בתהליך ({{doingTasks().length}})</h3>
+    <div class="task-list">
+      <mat-card *ngFor="let task of doingTasks()" class="task-card doing">
+        <mat-card-content>
+          <div class="task-main">
+            <h4 class="task-title">{{task.title}}</h4>
+          </div>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-icon-button color="primary" (click)="openComments(task)">
+            <mat-icon>forum</mat-icon>
+          </button>
+          <button mat-icon-button (click)="moveTask(task, 'todo')">
+            <mat-icon>undo</mat-icon>
+          </button>
+          <button mat-icon-button (click)="moveTask(task, 'done')">
+            <mat-icon>check_circle</mat-icon>
+          </button>
+          <button mat-icon-button (click)="editTask(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="board-column">
+    <h3 class="column-title">הושלם ({{doneTasks().length}})</h3>
+    <div class="task-list">
+      <mat-card *ngFor="let task of doneTasks()" class="task-card done">
+        <mat-card-content>
+          <h4 class="task-title">{{task.title}}</h4>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-icon-button color="primary" (click)="openComments(task)">
+            <mat-icon>forum</mat-icon>
+          </button>
+          <button mat-icon-button (click)="moveTask(task, 'doing')">
+            <mat-icon>settings_backup_restore</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTask(task)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

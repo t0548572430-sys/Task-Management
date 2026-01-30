@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="header">
+    <h1>הצוותים שלי</h1>
+    <button mat-flat-button class="add-btn" (click)="showCreateForm = !showCreateForm">
+      <mat-icon>add</mat-icon>
+      צוות חדש
+    </button>
+  </div>
+
+  <mat-progress-bar *ngIf="isLoading()" mode="indeterminate"></mat-progress-bar>
+
+  <div class="form-section" *ngIf="showCreateForm">
+    <mat-card class="glass-card">
+      <mat-form-field appearance="outline">
+        <mat-label>שם הצוות</mat-label>
+        <input matInput [(ngModel)]="newTeamName">
+      </mat-form-field>
+      <div class="actions">
+        <button mat-button (click)="showCreateForm = false">ביטול</button>
+        <button mat-raised-button color="primary" (click)="createTeam()">צור צוות</button>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="cards-grid">
+    <mat-card *ngFor="let team of teams()" class="custom-card" (click)="openProject(team.id)">
+      <div class="card-header-accent"></div> <mat-card-header>
+        <div mat-card-avatar class="avatar-box">
+          <mat-icon>groups</mat-icon>
+        </div>
+        <mat-card-title>{{ team.name }}</mat-card-title>
+        <mat-card-subtitle>
+          <mat-icon class="owner-icon" [style.color]="isOwner(team) ? '#6366f1' : '#94a3b8'">
+            {{ isOwner(team) ? 'stars' : 'person' }}
+          </mat-icon>
+          <span>{{ isOwner(team) ? 'מנהל הצוות' : 'חבר צוות' }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-actions align="end">
+        <button mat-stroked-button color="primary">צפה בפרויקטים</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

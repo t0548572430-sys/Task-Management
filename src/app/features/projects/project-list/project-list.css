@@ -1,0 +1,133 @@
+.projects-container {
+  padding: 30px 5%;
+  min-height: 100vh;
+}
+
+/* טולבר מעוצב */
+.custom-toolbar {
+  background: white !important;
+  border-radius: 25px;
+  height: 90px !important;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  padding: 0 25px !important;
+  display: flex;
+  align-items: center;
+  border: 1px solid #f1f5f9;
+}
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  margin-right: 15px;
+}
+
+.team-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.team-name {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.team-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 8px 15px;
+  border-radius: 15px;
+  color: #64748b;
+  margin-left: 20px;
+}
+
+/* כפתורי פעולה */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1, #a855f7) !important;
+  color: white !important;
+  border-radius: 16px !important;
+  font-weight: 600 !important;
+}
+
+.btn-secondary {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-radius: 16px !important;
+  margin-left: 10px;
+}
+
+/* כרטיסי פרויקטים - בדיוק כמו בלוח! */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.project-card-ui {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 30px !important;
+  border: 1px solid rgba(255,255,255,0.5) !important;
+  padding: 20px !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease !important;
+  cursor: pointer;
+}
+
+.project-card-ui:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06) !important;
+}
+
+/* הפס הצבעוני מעל כל פרויקט */
+.card-accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #34d399, #3b82f6); /* גוונים של ירוק-כחול */
+}
+
+.mat-mdc-card-title {
+  font-weight: 700 !important;
+  font-size: 1.4rem !important;
+  color: #1e293b !important;
+}
+
+.mat-mdc-card-subtitle {
+  margin-top: 8px !important;
+  font-size: 1rem !important;
+  color: #64748b !important;
+}
+
+.delete-btn {
+  color: #ef4444 !important;
+}
+
+.enter-btn {
+  font-weight: 600 !important;
+  color: #6366f1 !important;
+}
+
+/* מצב ריק */
+.empty-state-ui {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px;
+  color: #cbd5e1;
+}
+
+.empty-state-ui mat-icon {
+  font-size: 60px;
+  width: 60px;
+  height: 60px;
+}
