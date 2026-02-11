@@ -19,7 +19,7 @@ interface AuthResponse {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/auth';
+  private apiUrl = ' https://task-management-server-3xfz.onrender.com';
 
   // Signal שמחזיק את המשתמש הנוכחי - זה יעדכן אוטומטית את כל הקומפוננטות
   currentUser = signal<User | null>(null);

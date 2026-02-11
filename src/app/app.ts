@@ -1,11 +1,11 @@
 
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router'; // <--- ודאי שזה קיים
+import { RouterOutlet } from '@angular/router'; 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet], // <--- ודאי שזה קיים ברשימה
+  imports: [RouterOutlet], 
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

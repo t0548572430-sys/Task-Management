@@ -61,7 +61,7 @@ export class TeamListComponent implements OnInit {
     });
   }
 
-//   createTeam() {
+
 //     if (!this.newTeamName.trim()) return;
 
 //     this.isLoading.set(true);

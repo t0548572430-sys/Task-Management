@@ -184,43 +184,7 @@ openAddTask() {
   }
   
 
-// moveTask(task: Task, newStatus: string) {
-//     const originalStatus = task.status; // גיבוי למקרה של תקלה
 
-//     // 1. נכין חבילה נקייה לשליחה לשרת
-//     // אנחנו לוקחים את ה-ID של הפרויקט מה-URL (המשתנה הראשי) כדי לוודא שהוא לא הולך לאיבוד!
-//     const cleanPayload = {
-//       title: task.title,
-//       description: task.description || null,
-//       status: newStatus,
-//       projectId: Number(this.projectId) // המרה למספר, ושימוש ב-ID הבטוח
-//     };
-
-//     console.log('Sending clean update to server:', cleanPayload);
-
-//     // 2. עדכון ויזואלי מיידי (כדי שהמשתמש לא יחכה)
-//     const index = this.allTasks.findIndex(t => t.id === task.id);
-//     if (index !== -1) {
-//       // מעדכנים את המשימה בזיכרון
-//       this.allTasks[index] = { ...task, status: newStatus };
-//       this.updateColumns();
-//     }
-
-//     // 3. שליחה לשרת (PATCH)
-//     this.tasksService.updateTaskStatus(task.id, cleanPayload).subscribe({
-//       next: () => {
-//         console.log('Server saved the update successfully!');
-//       },
-//       error: (err) => {
-//         console.error('Update failed:', err);
-//         alert('שגיאה: השינוי לא נשמר בשרת. נסה שוב.');
-        
-//         // שחזור המצב הקודם במקרה של כישלון
-//         this.allTasks[index] = { ...task, status: originalStatus };
-//         this.updateColumns();
-//       }
-//     });
-//   }
 moveTask(task: Task, newStatus: string) {
     const originalStatus = task.status;
 

@@ -1,12 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// כאן אנחנו מגדירים איך נראה פרויקט לפי מה שהשרת שולח
 export interface Project {
-  id: number;           // שינינו מ-_id ל-id
+  id: number;         
   name: string;
   description?: string;
-  team_id: number;      // שינינו מ-teamId ל-team_id (חשוב!)
+  team_id: number;      
   status?: string;
 }
 
