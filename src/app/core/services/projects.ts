@@ -14,7 +14,7 @@ export interface Project {
 })
 export class ProjectsService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/projects';
+  private apiUrl = 'https://task-management-server-3xfz.onrender.com/api/projects';
 
   getProjects() {
     return this.http.get<Project[]>(this.apiUrl);

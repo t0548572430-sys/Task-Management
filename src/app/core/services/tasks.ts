@@ -13,7 +13,7 @@ export interface Task {
 })
 export class TasksService {
   private http = inject(HttpClient);
-  private apiUrl = ' https://task-management-server-3xfz.onrender.com';
+  private apiUrl = ' https://task-management-server-3xfz.onrender.com/api/tasks';
 
   // קבלת משימות (אנחנו נסנן לפי פרויקט)
   getTasks() {

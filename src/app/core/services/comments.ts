@@ -15,7 +15,7 @@ export interface Comment {
 @Injectable({ providedIn: 'root' })
 export class CommentsService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/comments';
+  private apiUrl = 'https://task-management-server-3xfz.onrender.com/api/comments';
 
   // GET /api/comments?taskId=XXX (מוגן)
   getComments(taskId: number) {

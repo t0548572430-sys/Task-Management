@@ -15,7 +15,7 @@ export interface Team {
 })
 export class TeamsService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/teams';
+  private apiUrl = 'https://task-management-server-3xfz.onrender.com/api/teams';
 
   getTeams() {
     return this.http.get<Team[]>(this.apiUrl);
