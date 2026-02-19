@@ -12,21 +12,16 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
-    canActivate: [authGuard], // <-- הוספנו את ההגנה כאן!
+    canActivate: [authGuard], 
     children: [
       { path: 'teams', component: TeamListComponent },
-      
-      // רשימת הפרויקטים של צוות מסוים
       { path: 'teams/:teamId', component: ProjectListComponent },
-      
-      // לוח המשימות של פרויקט מסוים
       { path: 'projects/:projectId', component: BoardViewComponent },
       
-      // ברירת מחדל: אם נכנסים סתם לכתובת הראשי, הולכים לצוותים
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
+      // תיקון כאן: מי שמחובר ונכנס לנתיב ריק - שיילך ישר לצוותים
+      { path: '', redirectTo: 'teams', pathMatch: 'full' }
     ]
   },
   
-  // (אופציונלי) ניתוב לכל כתובת לא מוכרת - זורק ללוגין
   { path: '**', redirectTo: 'login' }
 ];
