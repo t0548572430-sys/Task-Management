@@ -62,8 +62,6 @@ export class TeamListComponent implements OnInit {
   }
 
 
-//     if (!this.newTeamName.trim()) return;
-
 //     this.isLoading.set(true);
 //     this.teamsService.createTeam(this.newTeamName).subscribe({
 //       next: (newTeam) => {
