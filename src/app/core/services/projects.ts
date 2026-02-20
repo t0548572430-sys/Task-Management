@@ -15,7 +15,6 @@ export interface Project {
 export class ProjectsService {
   private http = inject(HttpClient);
   private apiUrl = 'https://task-management-server-3xfz.onrender.com/api/projects';
-
   getProjects() {
     return this.http.get<Project[]>(this.apiUrl);
   }
@@ -24,7 +23,7 @@ export class ProjectsService {
     return this.http.post<Project>(this.apiUrl, { 
       name, 
       description, 
-      teamId: teamId  // <--- התיקון: מחקנו את הקו התחתון!
+      teamId: teamId  
     });
   }
   // מחיקת פרויקט לפי מזהה
