@@ -60,90 +60,65 @@ export class TeamListComponent implements OnInit {
       }
     });
   }
+  isOwner(team: any): boolean {
+    const currentUserId = this.authService.currentUser()?.id;
 
+    if (team.owner_id || team.userId) {
+      return Number(team.owner_id || team.userId) === Number(currentUserId);
+    }
 
-//     this.isLoading.set(true);
-//     this.teamsService.createTeam(this.newTeamName).subscribe({
-//       next: (newTeam) => {
-//         // עדכון הרשימה המקומית מיד (בלי קריאה נוספת לשרת)
-//         this.teams.update(curr => [...curr, newTeam]);
-//         this.newTeamName = '';
-//         this.showCreateForm = false;
-//         this.isLoading.set(false);
-//       },
-//       error: (err) => {
-//         console.error(err);
-//         this.isLoading.set(false);
-//         alert('שגיאה ביצירת צוות');
-//       }
-//     });
-//   }
-//   private authService = inject(AuthService);
-
-// isOwner(team: any): boolean {
-//   const currentUser = this.authService.currentUser();
-//   if (!currentUser) return false;
-
-//   // בדיקה מול כל האופציות הנפוצות בלי להדפיס
-//   const ownerId = team.owner_id || team.ownerId || team.userId || team.owner;
-//   return Number(ownerId) === Number(currentUser.id);
-// }
-// עדכון פונקציית הבדיקה
-isOwner(team: any): boolean {
-  // ננסה לבדוק אם יש שדה owner (אולי הוא מופיע בצוותים חדשים)
-  if (team.owner_id || team.userId) {
-     return Number(team.owner_id || team.userId) === Number(this.authService.currentUser()?.id);
+    //בודק רק בזיכרון של המשתמש הספציפי שמחובר עכשיו!
+    const storageKey = 'my_teams_' + currentUserId;
+    const myCreatedTeams = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    return myCreatedTeams.includes(team.id);
   }
-  
-  // פתרון עוקף: אם יצרנו את הצוות בדפדפן הזה, נסמן אותו
-  const myCreatedTeams = JSON.parse(localStorage.getItem('my_teams') || '[]');
-  return myCreatedTeams.includes(team.id);
-}
 
-// עדכון פונקציית יצירת הצוות
-createTeam() {
-  if (!this.newTeamName.trim()) return;
-  this.isLoading.set(true);
+  createTeam() {
+    if (!this.newTeamName.trim()) return;
+    this.isLoading.set(true);
 
-  this.teamsService.createTeam(this.newTeamName).subscribe({
-    next: (newTeam) => {
-      // שמירת ה-ID של הצוות החדש ב-LocalStorage כדי שנזהה אותו כמנהלים
-      const myCreatedTeams = JSON.parse(localStorage.getItem('my_teams') || '[]');
-      myCreatedTeams.push(newTeam.id);
-      localStorage.setItem('my_teams', JSON.stringify(myCreatedTeams));
+    this.teamsService.createTeam(this.newTeamName).subscribe({
+      next: (newTeam) => {
+        // שמירה חכמה: שומרים את ה-ID של הצוות תחת המשתמש הספציפי שיצר אותו
+        const currentUserId = this.authService.currentUser()?.id;
+        const storageKey = 'my_teams_' + currentUserId;
 
-      this.teams.update(current => [...current, newTeam]);
-      this.newTeamName = '';
-      this.showCreateForm = false;
-      this.isLoading.set(false);
-      alert('הצוות נוצר בהצלחה!');
-    },
-    error: () => this.isLoading.set(false)
-  });
-}
+        const myCreatedTeams = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        myCreatedTeams.push(newTeam.id);
+        localStorage.setItem(storageKey, JSON.stringify(myCreatedTeams));
+
+        this.teams.update(current => [...current, newTeam]);
+        this.newTeamName = '';
+        this.showCreateForm = false;
+        this.isLoading.set(false);
+        alert('הצוות נוצר בהצלחה!');
+      },
+      error: () => this.isLoading.set(false)
+    });
+  }
   openProject(teamId: any) {
     console.log('Navigating to team:', teamId);
     this.router.navigate(['/teams', teamId]);
   }
   // אל תשכחי להזריק את ה-TeamsService ב-constructor או עם inject
 
-onAddMember(teamId: number) {
-  // פתיחת תיבת קלט קטנה של הדפדפן
-  const email = prompt('הזיני את כתובת האימייל של החבר שברצונך להוסיף:');
+  onAddMember(teamId: number) {
+    // פתיחת תיבת קלט קטנה של הדפדפן
+    const email = prompt('הזיני את כתובת האימייל של החבר שברצונך להוסיף:');
 
-  // בדיקה שהמשתמש לא לחץ "ביטול" ושהוא הזין מייל
-  if (email && email.trim() !== '') {
-    this.teamsService.addMemberToTeam(teamId, email.trim()).subscribe({
-      next: (res) => {
-        alert('החבר נוסף לצוות בהצלחה! 🎉');
-      },
-      error: (err) => {
-        console.error('שגיאה בהוספת חבר:', err);
-        // הצגת השגיאה מהשרת (למשל אם המשתמש לא קיים)
-        const errorMessage = err.error?.error || 'אופס, משהו השתבש. ודאי שהמייל תקין והמשתמש רשום במערכת.';
-        alert('שגיאה: ' + errorMessage);
-      }
-    });
+    // בדיקה שהמשתמש לא לחץ "ביטול" ושהוא הזין מייל
+    if (email && email.trim() !== '') {
+      this.teamsService.addMemberToTeam(teamId, email.trim()).subscribe({
+        next: (res) => {
+          alert('החבר נוסף לצוות בהצלחה! 🎉');
+        },
+        error: (err) => {
+          console.error('שגיאה בהוספת חבר:', err);
+          // הצגת השגיאה מהשרת (למשל אם המשתמש לא קיים)
+          const errorMessage = err.error?.error || 'אופס, משהו השתבש. ודאי שהמייל תקין והמשתמש רשום במערכת.';
+          alert('שגיאה: ' + errorMessage);
+        }
+      });
+    }
   }
-}
 }

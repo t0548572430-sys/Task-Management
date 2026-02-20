@@ -49,7 +49,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    localStorage.removeItem('my_teams');
     this.currentUser.set(null);
   }
 
