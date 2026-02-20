@@ -16,8 +16,8 @@ import { TeamsService } from '../../../core/services/teams';
   selector: 'app-project-list',
   standalone: true,
   imports: [
-    CommonModule, FormsModule, MatCardModule, MatButtonModule, 
-    MatIconModule, MatFormFieldModule, MatInputModule, 
+    CommonModule, FormsModule, MatCardModule, MatButtonModule,
+    MatIconModule, MatFormFieldModule, MatInputModule,
     MatProgressBarModule, MatToolbarModule
   ],
   templateUrl: './project-list.html',
@@ -28,11 +28,11 @@ export class ProjectListComponent implements OnInit {
   private teamsService = inject(TeamsService);
   private route = inject(ActivatedRoute);
   public router = inject(Router);
-  
+
   projects = signal<Project[]>([]);
   isLoading = signal<boolean>(true);
-  currentTeamId: number | null = null; 
-  currentTeam = signal<any>(null); 
+  currentTeamId: number | null = null;
+  currentTeam = signal<any>(null);
 
   showCreateForm = false;
   showMemberForm = false;
@@ -53,7 +53,12 @@ export class ProjectListComponent implements OnInit {
     this.teamsService.getTeams().subscribe({
       next: (teams) => {
         const foundTeam = teams.find((t: any) => Number(t.id) === Number(this.currentTeamId));
-        if (foundTeam) this.currentTeam.set(foundTeam);
+        if (foundTeam) {
+          this.currentTeam.set(foundTeam);
+        } else {
+          // אם הצוות לא נמצא ברשימה של המשתמש, ניצור אובייקט זמני כדי שהכפתור יפעל
+          this.currentTeam.set({ id: this.currentTeamId, name: 'צוות ' + this.currentTeamId });
+        }
       }
     });
   }
@@ -61,7 +66,7 @@ export class ProjectListComponent implements OnInit {
   submitAddMember() {
     // שלב בדיקה:
     console.log('--- פונקציית ההוספה הופעלה ---');
-    
+
     const teamId = this.currentTeam()?.id;
     if (!teamId || !this.newMemberEmail) {
       alert('נא להזין מזהה/מייל');
@@ -85,8 +90,9 @@ export class ProjectListComponent implements OnInit {
     this.isLoading.set(true);
     this.projectsService.getProjects().subscribe({
       next: (allProjects) => {
-        this.projects.set(allProjects.filter(p => Number(p.team_id) === Number(this.currentTeamId)));
-        this.isLoading.set(false);
+        this.projects.set(allProjects.filter(p =>
+          Number(p.team_id) === Number(this.currentTeamId)
+        )); this.isLoading.set(false);
       },
       error: () => this.isLoading.set(false)
     });
@@ -107,12 +113,12 @@ export class ProjectListComponent implements OnInit {
         error: () => this.isLoading.set(false)
       });
   }
-  
+
   openBoard(projectId: number) { this.router.navigate(['/projects', projectId]); }
   goBackToTeams() { this.router.navigate(['/teams']); }
-  
+
   deleteProject(project: Project) {
-    if(!confirm(`למחוק את "${project.name}"?`)) return;
+    if (!confirm(`למחוק את "${project.name}"?`)) return;
     this.projectsService.deleteProject(project.id).subscribe({
       next: () => this.projects.update(list => list.filter(p => p.id !== project.id))
     });
