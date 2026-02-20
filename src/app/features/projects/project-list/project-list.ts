@@ -48,16 +48,13 @@ export class ProjectListComponent implements OnInit {
       this.loadTeamDetails();
     }
   }
-
-  loadTeamDetails() {
+loadTeamDetails() {
     this.teamsService.getTeams().subscribe({
       next: (teams) => {
-        const foundTeam = teams.find((t: any) => Number(t.id) === Number(this.currentTeamId));
+        // התיקון: השתמשנו ב-== (פעמיים שווה) כדי שזה יתעלם מההבדל בין טקסט למספר
+        const foundTeam = teams.find((t: any) => t.id == this.currentTeamId);
         if (foundTeam) {
           this.currentTeam.set(foundTeam);
-        } else {
-          // אם הצוות לא נמצא ברשימה של המשתמש, ניצור אובייקט זמני כדי שהכפתור יפעל
-          this.currentTeam.set({ id: this.currentTeamId, name: 'צוות ' + this.currentTeamId });
         }
       }
     });
