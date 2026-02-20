@@ -52,7 +52,7 @@ export class ProjectListComponent implements OnInit {
   loadTeamDetails() {
     this.teamsService.getTeams().subscribe({
       next: (teams) => {
-        const foundTeam = teams.find((t: any) => t.id === this.currentTeamId);
+        const foundTeam = teams.find((t: any) => Number(t.id) === Number(this.currentTeamId));
         if (foundTeam) this.currentTeam.set(foundTeam);
       }
     });
@@ -85,7 +85,7 @@ export class ProjectListComponent implements OnInit {
     this.isLoading.set(true);
     this.projectsService.getProjects().subscribe({
       next: (allProjects) => {
-        this.projects.set(allProjects.filter(p => p.team_id == this.currentTeamId));
+        this.projects.set(allProjects.filter(p => Number(p.team_id) === Number(this.currentTeamId)));
         this.isLoading.set(false);
       },
       error: () => this.isLoading.set(false)
